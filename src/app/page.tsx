@@ -1,9 +1,22 @@
-import Candy from '@/components/Candy';
+'use client';
+
+import { Round } from '@/libs/Round';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [round, setRound] = useState<Round | undefined>(undefined);
+
+  useEffect(() => {
+    setRound(Round.create());
+  }, []);
+
+  if (!round) {
+    return <div>Please Wait</div>;
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Candy />
+    <div className="flex flex-col justify-center items-center">
+      {round.drawRound()}
     </div>
   );
 }
