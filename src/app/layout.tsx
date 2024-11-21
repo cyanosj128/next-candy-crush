@@ -1,17 +1,5 @@
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
 import './globals.css';
-
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-  weight: '100 900',
-});
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-  weight: '100 900',
-});
 
 export const metadata: Metadata = {
   title: 'Next Candy Crush',
@@ -23,11 +11,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang='en' className={` bg-[#505050] text-black`}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={'flex h-[100dvh] select-none items-center justify-center'}
+        style={{ minHeight: '-webkit-fill-available' }}
       >
-        {children}
+        <main
+          className={`flex flex-col h-full max-h-[932px] w-full max-w-[430px] overflow-y-scroll overflow-x-hidden bg-black relative mt-12px px-[16px] pt-[18px] flex-1 shrink-0 basis-full scrollbar-hide`}
+        >
+          {children}
+        </main>
       </body>
     </html>
   );
