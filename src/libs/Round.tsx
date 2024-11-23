@@ -1,10 +1,13 @@
-import BaseCandy from '@/components/BaseCandy';
+import { AbstractCandy } from './candy/AbstractCandy';
+import { BasicCandy } from './candy/BasicCandy';
+import { Coordinate } from './Coordinate';
 
 export enum CandyColor {
-  'R',
-  'G',
-  'B',
-  'Y',
+  'R' = 'bg-[#ff0000]',
+  'G' = 'bg-[#00ff00]',
+  'B' = 'bg-[#0000ff]',
+  'Y' = 'bg-[#ffff00]',
+  'C' = 'bg-[#00ffff]',
 }
 
 const candyColorArr: CandyColor[] = [
@@ -12,66 +15,34 @@ const candyColorArr: CandyColor[] = [
   CandyColor.G,
   CandyColor.R,
   CandyColor.Y,
+  CandyColor.C,
 ];
 
 export class Round {
-  private from: undefined | string;
-  private to: undefined | string;
+  private roundInfo: AbstractCandy[][];
 
-  private roundInfo: CandyColor[][];
-
-  private constructor(roundInfo: CandyColor[][]) {
+  private constructor(roundInfo: AbstractCandy[][]) {
     this.roundInfo = roundInfo;
   }
 
-  setFrom(rowIndex: number, colIndex: number) {
-    this.from = `${rowIndex},${colIndex}`;
-  }
-
-  setTo(rowIndex: number, colIndex: number) {
-    this.to = `${rowIndex},${colIndex}`;
-  }
-
   drawRound() {
-    return this.roundInfo.map((r, rowIndex) => (
-      <div className="flex">
-        {r.map((c, columnIndex) => {
-          let bgStyle = '';
-          if (c === CandyColor.R) {
-            bgStyle = 'bg-[#ff0000]';
-          } else if (c === CandyColor.B) {
-            bgStyle = 'bg-[#0000ff]';
-          } else if (c === CandyColor.Y) {
-            bgStyle = 'bg-[#ffff00]';
-          } else {
-            bgStyle = 'bg-[#00ff00]';
-          }
-          return (
-            <BaseCandy
-              key={`r-${rowIndex}-c-${columnIndex}`}
-              bgStyle={bgStyle}
-              colIndex={columnIndex}
-              rowIndex={rowIndex}
-            />
-          );
-        })}
-      </div>
+    return this.roundInfo.map((r, ri) => (
+      <div className='flex gap-1'>{r.map((c, ci) => c.draw())}</div>
     ));
   }
 
   static create() {
-    const newRound: CandyColor[][] = [];
-    for (let i = 0; i < 5; i++) {
+    const newRound: AbstractCandy[][] = [];
+    for (let i = 0; i < 8; i++) {
       const newRow = [];
-      for (let j = 0; j < 5; j++) {
-        newRow.push(
-          candyColorArr[Math.floor(Math.random() * candyColorArr.length)]
-        );
+      for (let j = 0; j < 8; j++) {
+        const color =
+          candyColorArr[Math.floor(Math.random() * candyColorArr.length)];
+
+        newRow.push(new BasicCandy(new Coordinate(i, j), color));
       }
       newRound.push(newRow);
     }
-
-    console.log(newRound);
 
     return new Round(newRound);
   }
