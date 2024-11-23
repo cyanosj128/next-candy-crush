@@ -27,7 +27,9 @@ export class Round {
 
   drawRound() {
     return this.roundInfo.map((r, ri) => (
-      <div className='flex gap-1'>{r.map((c, ci) => c.draw())}</div>
+      <div key={`row-${ri}`} className="flex gap-1">
+        {r.map((c, ci) => c.draw())}
+      </div>
     ));
   }
 

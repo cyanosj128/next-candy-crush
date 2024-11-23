@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/libs/candy/AbstractCandy.tsx"
+    "src/libs/candy/AbstractCandy.tsx",
+    "next.config.mjs"
   ],
   "exclude": ["node_modules"]
 }
